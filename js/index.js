@@ -9,7 +9,7 @@ console.log(removeTask);
 
 
 const LOCAL__KEY = 'localKey';
-toDoMarkUp(JSON.parse(localStorage.getItem(LOCAL__KEY)));
+toDoMarkUp();
 
 addTask.addEventListener('click', onAddTask);
 
@@ -32,10 +32,11 @@ function onAddTask() {
 	const localData = localStorage.setItem(LOCAL__KEY, toStringData);
 	console.log(localData);
 	enterTask.value = '';
-	toDoMarkUp(data);
+	toDoMarkUp();
 }
 
-function toDoMarkUp(objecData) {
+function toDoMarkUp() {
+	const objecData = JSON.parse(localStorage.getItem(LOCAL__KEY));
 	todoListContainer.innerHTML = '';
 	 const elemnts = objecData.map(({ id, value, cls }) => {
 		 return `<li class="${cls}" id="${id}">${value}</li>`
@@ -49,9 +50,17 @@ function toDoMarkUp(objecData) {
 todoListContainer.addEventListener('click', crossTask);
 
 function crossTask(e) {
-	if (e.target.className === 'listItem') {
+	if (e.target.nodeName === 'LI') {
 		const data = JSON.parse(localStorage.getItem(LOCAL__KEY));
-		// data[id].cls = 'list_done-task';
-		console.log(data);
+		data.find(item => {
+			if ( Number(e.target.id) === item.id) {
+				item.cls = 'list_done-task';
+				console.log(item.cls);
+			}
+			
+		})
+		localStorage.setItem(LOCAL__KEY, JSON.stringify(data));
 	}
+	toDoMarkUp();
 }
+
