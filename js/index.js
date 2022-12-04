@@ -9,7 +9,7 @@ console.log(removeTask);
 
 
 const LOCAL__KEY = 'localKey';
-toDoMarkUp();
+
 
 addTask.addEventListener('click', onAddTask);
 
@@ -77,12 +77,11 @@ function onRemoveTask() {
 	for (const item of arrayData) {
 		if (item.cls === 'listItem') {
 			newArray.push(item);
-			
-		localStorage.setItem(LOCAL__KEY, JSON.stringify(newArray));
 		}
-		
+		localStorage.setItem(LOCAL__KEY, JSON.stringify(newArray));
 	}
 		toDoMarkUp();
 	}
 	
 
+toDoMarkUp();
