@@ -9,14 +9,17 @@ console.log(removeTask);
 
 
 const LOCAL__KEY = 'localKey';
+toDoMarkUp(JSON.parse(localStorage.getItem(LOCAL__KEY)));
 
 addTask.addEventListener('click', onAddTask);
+
 
 function onAddTask() {
 
 	const toDo = {
 		id: Date.now(),
 		value: enterTask.value,
+		cls: 'listItem',
 	}
 	let data = JSON.parse(localStorage.getItem(LOCAL__KEY));
 	if (!data) {
@@ -29,15 +32,26 @@ function onAddTask() {
 	const localData = localStorage.setItem(LOCAL__KEY, toStringData);
 	console.log(localData);
 	enterTask.value = '';
-	todoListContainer.insertAdjacentHTML('beforeend', toDoMarkUp(data));
+	toDoMarkUp(data);
 }
 
 function toDoMarkUp(objecData) {
 	todoListContainer.innerHTML = '';
-	 const elemnts = objecData.map(({ id, value }) => {
-		 return `<li class="" id="${id}">${value}</li>`
-	}).join('');
-	return elemnts;
+	 const elemnts = objecData.map(({ id, value, cls }) => {
+		 return `<li class="${cls}" id="${id}">${value}</li>`
+	 }).join('');
+	
+	todoListContainer.insertAdjacentHTML('beforeend', elemnts);
+	
 }
 
 
+todoListContainer.addEventListener('click', crossTask);
+
+function crossTask(e) {
+	if (e.target.className === 'listItem') {
+		const data = JSON.parse(localStorage.getItem(LOCAL__KEY));
+		// data[id].cls = 'list_done-task';
+		console.log(data);
+	}
+}
