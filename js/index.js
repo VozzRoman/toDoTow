@@ -64,3 +64,25 @@ function crossTask(e) {
 	toDoMarkUp();
 }
 
+removeTask.addEventListener('click', onRemoveTask);
+
+function onRemoveTask() {
+	const getData = localStorage.getItem(LOCAL__KEY);
+	const arrayData = JSON.parse(getData);
+	console.log(arrayData);
+	// const filtered = arrayData.filter(item => item.cls === 'listItem');
+	// console.log(filtered);
+	// localStorage.setItem(LOCAL__KEY, JSON.stringify(filtered));
+	let newArray = [];
+	for (const item of arrayData) {
+		if (item.cls === 'listItem') {
+			newArray.push(item);
+			
+		localStorage.setItem(LOCAL__KEY, JSON.stringify(newArray));
+		}
+		
+	}
+		toDoMarkUp();
+	}
+	
+
