@@ -6,13 +6,28 @@ const enterTask = document.querySelector('.input-js');
 console.log(addTask);
 console.log(removeTask);
 
-const LOCAL__KEY = 'tasKey';
+
 
 addTask.addEventListener('click', onAddTask);
 
 function onAddTask() {
-	const localData = localStorage.setItem(LOCAL__KEY, enterTask.value);
+
+	const toDo = {
+		id: Date.now(),
+		value: enterTask.value,
+	}
+	let data = JSON.parse(localStorage.getItem('localKey'));
+	if (!data) {
+		data = [];
+	}
+	data.push(toDo);
+	console.log(data);
+	const toStringData = JSON.stringify(data);
+	console.log(toStringData);
+	const localData = localStorage.setItem('localKey', toStringData);
 	console.log(localData);
-	const webData = localStorage.getItem(LOCAL__KEY);
-	console.log(webData);
+
+
+
+	
 }
